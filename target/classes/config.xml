@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:p="http://www.springframework.org/schema/p"
+ xmlns:tx="http://www.springframework.org/schema/tx"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+     http://www.springframework.org/schema/context 
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/tx 
+     http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     "
+ >
+ 	<!-- To enable the transactional annotation -->
+ 	
+ 	<tx:annotation-driven />
+ 	
+ 	<!-- let us start configuring our beans -->
+ 	
+ 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" name="driver1">
+ 	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+ 	<property name="url" value="jdbc:mysql://localhost:3306/springjdbc"></property>
+ 	<property name="username" value="root"></property>
+ 	<property name="password" value="Sql@1234"></property>
+ 	</bean>
+ 	
+ 	<!-- We will create bean of the implementation class of sessionFactory and we have to set three properties also  -->
+ 	<bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" name="localSession">
+ 		<property name="dataSource" ref="driver1"></property>
+ 		<property name="hibernateProperties">
+ 			<props>
+ 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+ 				<prop key="hiberate.show_sql">true</prop>
+ 				<prop key="hibernate.hbm2ddl.auto">update</prop>
+ 			</props>
+ 		</property>
+ 		<property name="annotatedClasses">
+ 			<list>
+ 				<value>springORM.ormspring.springorm.entities.Student</value>
+ 			</list>
+ 		</property>
+ 	</bean>
+ 	
+ 	<bean class="org.springframework.orm.hibernate5.HibernateTemplate" name="hibernate">
+ 		<property name="sessionFactory" ref="localSession"></property>
+ 	</bean>
+ 	
+ 	<bean class="springORM.ormspring.springorm.dao.StudentDao" name="studentDao">
+ 		<property name="hibernateTemplate" ref="hibernate"></property>
+ 	</bean>
+ 	
+ 		<!-- We need to declare a bean to handle transactional Management -->
+ 	<bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" name="transactionManager">
+ 		<property name="sessionFactory" ref="localSession"></property>
+ 	</bean>
+ 
+ 	
+</beans>
