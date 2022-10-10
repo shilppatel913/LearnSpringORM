@@ -24,8 +24,8 @@ We will making use of the hibernate template class to implement all our methods.
 Above image shows you which class will be needing object of which class and below is the explaination.
 
 If you want to work with a particular entity and do crud operations on it the standard method is to make Dao class. For example if there is an entity known as Product
-we make it's dao class which is known as data access objects. We need to use hibernateTemplate class to use hibernate. The hibernateTemplate class must need an object of 
-SessionFactory interface but since it is an interface we create its object. Hence we will be using its implementation class known as LocalSessionFactoryBean which require three values.
+we make it's dao class to access it's data in the form of objects. We need to use hibernateTemplate class to use hibernate. The hibernateTemplate class must need an object of 
+SessionFactory interface but since it is an interface we cannot create its object. Hence we will be using its implementation class known as LocalSessionFactoryBean which require three values.
 
 1) Datasource (all the database related info to connect with it)
 2) Hibernate properties
